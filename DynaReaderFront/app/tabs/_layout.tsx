@@ -18,7 +18,14 @@ export default function RootLayout() {
                     fontSize: 16
                 }
             }}
-        />       
+        />
+                <Drawer.Screen
+            name="LoginScreen"
+            options={{
+                headerShown: false,
+                swipeEnabled: false,
+            }}
+        />         
     </Drawer>
   );
 }

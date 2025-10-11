@@ -1,6 +1,5 @@
 import React from "react";
-import { createDrawerNavigator, DrawerContentComponentProps } from "@react-navigation/drawer";
-import HomeScreen from "../app/tabs/HomeScreen";
+import { DrawerContentComponentProps } from "@react-navigation/drawer";
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import { useAuth } from "../context/AuthContext";
 import { jwtDecode } from "jwt-decode";
@@ -14,10 +13,17 @@ interface TokenPayLoad {
 export default function CustomDrawerContent(props: DrawerContentComponentProps) {
     const { logout, token } = useAuth()
 
-    let username = ''
+    let username = 'Leitor(a)'
     if (token) {
         const decoded = jwtDecode<TokenPayLoad>(token)
         username = decoded.username
+    }
+
+    function Sair({token}: {token: string | null}) {
+        if (token) {
+            return  <DrawerItemSeparator label="Sair" onPress={handleLogout} color="red" />
+        }
+        return null
     }
 
     const handleLogout = () => {
@@ -86,11 +92,7 @@ export default function CustomDrawerContent(props: DrawerContentComponentProps) 
                     label="Créditos"
                     onPress={() => console.log('Futuramente colocar a pagina de créditos do app.')}
                 />
-                <DrawerItemSeparator
-                    label="Sair"
-                    onPress={handleLogout}
-                    color="red"
-                />
+                <Sair token={token} />
             </View>
         </View>
     )

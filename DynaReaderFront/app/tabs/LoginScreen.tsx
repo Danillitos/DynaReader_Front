@@ -69,7 +69,7 @@ export default function LoginScreen() {
          <SafeAreaView style={{ flex: 1, backgroundColor: '#F2F2F0' }}>
             <View style={styles.container}>
                 <Image
-                    source={require('../assets/images/logo.png')}
+                    source={require('../../assets/images/logo.png')}
                     style={styles.logoImage}
                 />
                 <Text style={styles.title}>DynaReader</Text>
@@ -77,7 +77,7 @@ export default function LoginScreen() {
                 {isloading && (
                     <View style={styles.loadingContainer}>
                         <LottieView
-                            source={require('../assets/animations/Trail-loading.json')}
+                            source={require('../../assets/animations/Trail-loading.json')}
                             autoPlay
                             loop
                             style={styles.loadingIcon}
@@ -117,7 +117,7 @@ export default function LoginScreen() {
 
                 <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
                     <Image
-                        source={passwordVisible ? require('../assets/images/eye-on.png') : require('../assets/images/eye-off.png')}
+                        source={passwordVisible ? require('../../assets/images/eye-on.png') : require('../../assets/images/eye-off.png')}
                         style={{ width: 20, height: 20, position: 'absolute', right: 40, top: -31 }}
                     />
                 </TouchableOpacity>
@@ -144,7 +144,7 @@ export default function LoginScreen() {
                 <View style={styles.iconRow}>
                     <TouchableOpacity style={styles.iconButton}>
                         <Image
-                            source={require('../assets/images/Google_logo.png')}
+                            source={require('../../assets/images/Google_logo.png')}
                             style={styles.iconImage}
                         />
                     </TouchableOpacity>
@@ -152,7 +152,7 @@ export default function LoginScreen() {
 
                     <TouchableOpacity style={styles.iconButton}>
                         <Image
-                            source={require('../assets/images/Dropbox_logo.png')}
+                            source={require('../../assets/images/Dropbox_logo.png')}
                             style={styles.iconImage}
                         />
                     </TouchableOpacity>
