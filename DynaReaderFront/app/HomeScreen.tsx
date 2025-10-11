@@ -29,14 +29,14 @@ export default function HomeScreen() {
                     <View style={styles.iconRow}>
                         <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
                             <Image
-                                source={require('../assets/menu.png')}
+                                source={require('../assets/images/menu.png')}
                                 style={{ width: 40, height: 40}}
                             />
                         </TouchableOpacity>
 
                         <TouchableOpacity>
                         <Image
-                            source={require('../assets/profile.png')}
+                            source={require('../assets/images/profile.png')}
                             style={{ width: 40, height: 40}}
                         />
                         </TouchableOpacity>
@@ -54,7 +54,7 @@ export default function HomeScreen() {
                     <Animated.View style={[ styles.lowerRectangle, animatedStyle ]}>
                         <TouchableOpacity onPress={togglePanel}>
                             <Animated.Image
-                                source={require('../assets/swipe-up.png')}
+                                source={require('../assets/images/swipe-up.png')}
                                 style={[{ width: 50, height: 50, top: -20 }, arrowAnimatedStyle]}
                             />
                             <Animated.Text style={[styles.bookText, bookTextAnimatedStyle]}>Livros</Animated.Text>
