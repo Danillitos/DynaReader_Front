@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 
-
 type PdfRef = { uri: string; name: string };
 type Props = { pdfs: PdfRef[] };
 

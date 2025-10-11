@@ -19,6 +19,13 @@ export default function CustomDrawerContent(props: DrawerContentComponentProps) 
         username = decoded.username
     }
 
+    function Sair({token}: {token: string | null}) {
+        if (token) {
+            return  <DrawerItemSeparator label="Sair" onPress={handleLogout} color="red" />
+        }
+        return null
+    }
+
     const handleLogout = () => {
         Alert.alert(
             "Confirmação",
@@ -44,12 +51,6 @@ export default function CustomDrawerContent(props: DrawerContentComponentProps) 
         )
     }
 
-    function Sair({token}: {token: string | null}) {
-        if (token) {
-            return  <DrawerItemSeparator label="Sair" onPress={handleLogout} color="red" />
-        }
-        return null
-    }
 
     return(
         <View style={{ flex: 1}}>

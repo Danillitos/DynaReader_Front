@@ -15,8 +15,7 @@
         "backgroundColor": "#E6F4FE"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
-      "package": "com.danillitos.DynaReaderFront"
+      "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "static"
