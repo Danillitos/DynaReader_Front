@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity, Button } f
 import { GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
-import { useSwipePanel } from '../hooks/useSwipePanel';
-import BookList from '../components/bookList'
-import { usePdfService } from '../services/pdfService';
+import { useSwipePanel } from '../../hooks/useSwipePanel';
+import BookList from '../../components/bookList'
+import { usePdfService } from '../../services/pdfService';
 
 
 export default function HomeScreen() {
