@@ -1,10 +1,18 @@
 import { useState } from "react";
 import * as DocumentPicker from "expo-document-picker";
 
-type PdfRef = { uri: string; name: string };
+export type PdfRef = { uri: string; name: string; pages?: number };
 
 export function usePdfService() {
   const [pdfs, setPdfs] = useState<PdfRef[]>([]);
+
+  const updatePdfPagesCount = (uri: string, pages: number) => {
+    setPdfs(currentPdfs =>
+      currentPdfs.map(pdf =>
+        pdf.uri === uri ? { ...pdf, pages } : pdf
+      )
+    );
+  };
 
   const pickPdfs = async () => {
     try {
@@ -32,7 +40,10 @@ export function usePdfService() {
           ...prev,
           {
             uri: legacy.uri,
-            name: legacy.name || legacy.uri.split("/").pop() || "Arquivo sem nome",
+            name:
+              legacy.name ||
+              legacy.uri.split("/").pop() ||
+              "Arquivo sem nome",
           },
         ]);
       }
@@ -41,5 +52,5 @@ export function usePdfService() {
     }
   };
 
-  return { pdfs, pickPdfs };
+  return { pdfs, pickPdfs, updatePdfPagesCount };
 }
