@@ -46,7 +46,6 @@ export default function LoginScreen() {
             }
             
             if (error.response) {
-                const status = error.response.status
                 const messageText = error.response.data?.message || 'Erro desconhecido'
 
                 setMessage(Array.isArray(messageText) ? messageText.join(',') : messageText)
