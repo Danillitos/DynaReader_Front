@@ -20,7 +20,7 @@ export default function RootLayout() {
             }}
         />
                 <Drawer.Screen
-            name="loginScreen"
+            name="LoginScreen"
             options={{
                 headerShown: false,
                 swipeEnabled: false,
