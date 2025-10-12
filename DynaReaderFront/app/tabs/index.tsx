@@ -1,4 +1,3 @@
-// src/screens/HomeScreen.tsx
 import React, { useState } from 'react';
 import { 
   View, 
@@ -18,7 +17,7 @@ import { usePdfService, PdfRef } from '../../services/pdfService';
 import PdfViewer from '../../components/pdfViewer'; // novo componente
 
 export default function HomeScreen() {
-  const { pdfs, pickPdfs, updatePdfPagesCount } = usePdfService();
+  const { pdfs, pickPdfs } = usePdfService();
   const navigation = useNavigation();
 
   const { 
@@ -104,7 +103,7 @@ export default function HomeScreen() {
       >
         <Text>Conteúdo dos Livros</Text>
         <Button title="Adicionar PDF" onPress={pickPdfs} />
-        <BookList pdfs={pdfs} onSelect={handleSelectPdf} updatePdfPagesCount={updatePdfPagesCount} />
+        <BookList pdfs={pdfs} onSelect={handleSelectPdf} />
       </Animated.View>
 
       {/* Visualizador de PDF */}

@@ -6,14 +6,6 @@ export type PdfRef = { uri: string; name: string; pages?: number };
 export function usePdfService() {
   const [pdfs, setPdfs] = useState<PdfRef[]>([]);
 
-  const updatePdfPagesCount = (uri: string, pages: number) => {
-    setPdfs(currentPdfs =>
-      currentPdfs.map(pdf =>
-        pdf.uri === uri ? { ...pdf, pages } : pdf
-      )
-    );
-  };
-
   const pickPdfs = async () => {
     try {
       const res = await DocumentPicker.getDocumentAsync({
@@ -52,5 +44,5 @@ export function usePdfService() {
     }
   };
 
-  return { pdfs, pickPdfs, updatePdfPagesCount };
+  return { pdfs, pickPdfs };
 }

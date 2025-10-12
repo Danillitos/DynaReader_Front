@@ -6,29 +6,15 @@ import {
   StyleSheet,
 } from "react-native";
 import { PdfRef } from "../services/pdfService";
-import PdfPageCounter from "./pdfLoader";
 
 type Props = {
   pdfs: PdfRef[];
   onSelect: (pdf: PdfRef) => void;
-  updatePdfPagesCount: (uri: string, pages: number) => void; // Adicione esta prop
 };
 
-export default function BookList({ pdfs, onSelect, updatePdfPagesCount }: Props) {
+export default function BookList({ pdfs, onSelect }: Props) {
   return (
     <>
-      {/* Componentes invisíveis para contar páginas */}
-      {pdfs.map((pdf) => (
-        !pdf.pages && (
-          <PdfPageCounter
-            key={pdf.uri}
-            uri={pdf.uri}
-            onLoadComplete={(numberOfPages) => updatePdfPagesCount(pdf.uri, numberOfPages)}
-          />
-        )
-      ))}
-      
-      {/* Lista de PDFs */}
       <FlatList
         style={{ alignSelf: "stretch" }}
         data={pdfs}

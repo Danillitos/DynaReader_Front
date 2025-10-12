@@ -5,7 +5,7 @@ export default function RootLayout() {
   return (
     <Drawer drawerContent={ CustomDrawerContent }>
         <Drawer.Screen
-            name="HomeScreen"
+            name="index"
             options={{
                 headerShown: false,
                 drawerLabel: "Home",
@@ -20,7 +20,7 @@ export default function RootLayout() {
             }}
         />
                 <Drawer.Screen
-            name="LoginScreen"
+            name="loginScreen"
             options={{
                 headerShown: false,
                 swipeEnabled: false,
