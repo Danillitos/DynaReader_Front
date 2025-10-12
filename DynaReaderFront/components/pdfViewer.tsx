@@ -8,11 +8,10 @@ type Props = {
   visible: boolean;
   pdf: PdfRef | null;
   onClose: () => void;
+  onPdfLoadComplete?: (pdfUri: string, numberOfPages: number) => void
 };
 
-let pageCount = 0
-
-export default function PdfViewer({ visible, pdf, onClose }: Props) {
+export default function PdfViewer({ visible, pdf, onClose, onPdfLoadComplete }: Props) {
   if (!pdf) return null;
 
   const source = { uri: pdf.uri, cache: true };
@@ -37,8 +36,10 @@ export default function PdfViewer({ visible, pdf, onClose }: Props) {
           enableAnnotationRendering
           trustAllCerts={false}
           onLoadComplete={(numberOfPages) => {
-            pageCount = numberOfPages
             console.log(`Total de páginas: ${numberOfPages}`)
+            if (onPdfLoadComplete && pdf) {
+              onPdfLoadComplete(pdf.uri, numberOfPages)
+            }
           }}
         />
       </SafeAreaView>

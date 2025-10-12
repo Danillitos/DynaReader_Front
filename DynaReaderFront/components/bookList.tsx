@@ -30,7 +30,7 @@ export default function BookList({ pdfs, onSelect }: Props) {
               <Text style={styles.title}>
                 {item.name.replace(/\.pdf$/i, "")}
               </Text>
-              <Text>Páginas: {item.pages || "Carregando..."}</Text>
+              <Text>Páginas: {item.pages || "Abra o PDF para atualizar o número de paginas"}</Text>
               <Text>Autor:</Text>
               <Text>Progresso:</Text>
             </TouchableOpacity>

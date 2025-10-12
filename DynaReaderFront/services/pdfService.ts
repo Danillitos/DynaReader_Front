@@ -44,5 +44,13 @@ export function usePdfService() {
     }
   };
 
-  return { pdfs, pickPdfs };
+  const updatePdfPages = (pdfUri: string, numberOfPages: number) => {
+    setPdfs((prev) => 
+      prev.map((pdf =>
+        pdf.uri === pdfUri ? { ...pdf, pages: numberOfPages } : pdf
+      ))
+    )
+  }
+
+  return { pdfs, pickPdfs, updatePdfPages };
 }

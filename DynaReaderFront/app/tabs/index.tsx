@@ -17,7 +17,7 @@ import { usePdfService, PdfRef } from '../../services/pdfService';
 import PdfViewer from '../../components/pdfViewer'; // novo componente
 
 export default function HomeScreen() {
-  const { pdfs, pickPdfs } = usePdfService();
+  const { pdfs, pickPdfs, updatePdfPages } = usePdfService();
   const navigation = useNavigation();
 
   const { 
@@ -29,7 +29,6 @@ export default function HomeScreen() {
     togglePanel
   } = useSwipePanel();
 
-  // Estado para o PDF selecionado e controle do viewer
   const [selectedPdf, setSelectedPdf] = useState<PdfRef | null>(null);
   const [viewerVisible, setViewerVisible] = useState(false);
 
@@ -111,6 +110,7 @@ export default function HomeScreen() {
         visible={viewerVisible}
         pdf={selectedPdf}
         onClose={handleCloseViewer}
+        onPdfLoadComplete={updatePdfPages}
       />
     </GestureHandlerRootView>
   );
