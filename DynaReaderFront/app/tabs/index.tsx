@@ -17,7 +17,7 @@ import { usePdfService, PdfRef } from '../../services/pdfService';
 import PdfViewer from '../../components/pdfViewer'; // novo componente
 
 export default function HomeScreen() {
-  const { pdfs, pickPdfs, updatePdfPages } = usePdfService();
+  const { pdfs, pickPdfs, updatePdfData, generatePdfThumbnail } = usePdfService();
   const navigation = useNavigation();
 
   const { 
@@ -110,7 +110,9 @@ export default function HomeScreen() {
         visible={viewerVisible}
         pdf={selectedPdf}
         onClose={handleCloseViewer}
-        onPdfLoadComplete={updatePdfPages}
+        onPdfLoadComplete={updatePdfData}
+        generatePdfThumbnail={generatePdfThumbnail}
+
       />
     </GestureHandlerRootView>
   );

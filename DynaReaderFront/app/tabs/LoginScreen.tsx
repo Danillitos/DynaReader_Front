@@ -142,12 +142,6 @@ export default function LoginScreen() {
                 </TouchableOpacity>
 
                 <View style={styles.iconRow}>
-                    <TouchableOpacity style={styles.iconButton}>
-                        <Image
-                            source={require('../../assets/images/Google_logo.png')}
-                            style={styles.iconImage}
-                        />
-                    </TouchableOpacity>
 
 
                     <TouchableOpacity style={styles.iconButton}>

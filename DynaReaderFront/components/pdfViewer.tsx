@@ -8,10 +8,11 @@ type Props = {
   visible: boolean;
   pdf: PdfRef | null;
   onClose: () => void;
-  onPdfLoadComplete?: (pdfUri: string, numberOfPages: number) => void
+  onPdfLoadComplete?: (pdfUri: string, numberOfPages: number, pdfThumbnail?: string) => void
+  generatePdfThumbnail: (pdfUri: string) => Promise<string | undefined>
 };
 
-export default function PdfViewer({ visible, pdf, onClose, onPdfLoadComplete }: Props) {
+export default function PdfViewer({ visible, pdf, onClose, onPdfLoadComplete, generatePdfThumbnail }: Props) {
   if (!pdf) return null;
 
   const source = { uri: pdf.uri, cache: true };
@@ -35,10 +36,18 @@ export default function PdfViewer({ visible, pdf, onClose, onPdfLoadComplete }: 
           enablePaging
           enableAnnotationRendering
           trustAllCerts={false}
-          onLoadComplete={(numberOfPages) => {
+          onLoadComplete={async (numberOfPages) => {
             console.log(`Total de páginas: ${numberOfPages}`)
+          
             if (onPdfLoadComplete && pdf) {
-              onPdfLoadComplete(pdf.uri, numberOfPages)
+              let thumb: string | undefined = undefined
+              try {
+                thumb = pdf?.uri ? await generatePdfThumbnail(pdf.uri) : undefined
+              }
+              catch (error) {
+                console.error("Erro ao gerar thumbnail:", error)
+              }
+              onPdfLoadComplete(pdf.uri, numberOfPages, thumb )
             }
           }}
         />
