@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from "react-native";
 import DraggableFlatList, { RenderItemParams} from "react-native-draggable-flatlist"
 import { PdfRef } from "../services/pdfService";
@@ -9,7 +9,12 @@ type Props = {
 };
 
 export default function BookList({ pdfs, onSelect }: Props) {
+  const [ data, setData ] = useState<PdfRef[]>(pdfs)
   const [ favorite, setFavorite ] = useState<{ [uri: string]: boolean }>({})
+
+  useEffect(() => {
+    setData(pdfs)
+  }, [pdfs])
 
   const toggleFavorite = ( uri: string ) => {
     setFavorite(prev => ({
@@ -21,8 +26,16 @@ export default function BookList({ pdfs, onSelect }: Props) {
   const renderItem = ({ item, drag, isActive }: RenderItemParams<PdfRef>) => (
     <TouchableOpacity
       onLongPress={drag}
-      disabled={isActive}
-      style={[ styles.item, { backgroundColor: isActive ? "#f0f0f0" : "#fff" } ]}
+      delayLongPress={100}
+      activeOpacity={0.9}
+      style={[ 
+        styles.item,
+         { 
+          backgroundColor: isActive ? "#f0f0f0" : "#fff",
+          transform: [{ scale: isActive ? 1.03 : 1 }],
+          shadowOpacity: isActive ? 0.4 : 0.2, 
+        } 
+      ]}
     >
       <View style={ styles.Row }>
         <TouchableOpacity onPress = {() => onSelect(item)}>
@@ -69,11 +82,17 @@ export default function BookList({ pdfs, onSelect }: Props) {
   return (
     <>
       <DraggableFlatList
+        activationDistance={10}
+        autoscrollSpeed={100}
+        autoscrollThreshold={50}
+        dragItemOverflow={true}
+        animationConfig={{ damping: 15, mass: 0.2, stiffness: 150 }}
         style={{ alignSelf: "stretch" }}
-        data={pdfs}
+        data={data}
         keyExtractor={(item, index) => `${item.uri}-${index}`}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         renderItem={renderItem}
+        onDragEnd={({ data }) => setData(data)}
         ListEmptyComponent={
           <View style={styles.item}>
             <Text>Nenhum PDF selecionado ainda.</Text>
