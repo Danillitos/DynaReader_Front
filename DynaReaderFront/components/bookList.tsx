@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from "react-native";
+import DraggableFlatList, { RenderItemParams} from "react-native-draggable-flatlist"
 import { PdfRef } from "../services/pdfService";
 
 type Props = {
@@ -17,56 +18,62 @@ export default function BookList({ pdfs, onSelect }: Props) {
     }))
   }
 
+  const renderItem = ({ item, drag, isActive }: RenderItemParams<PdfRef>) => (
+    <TouchableOpacity
+      onLongPress={drag}
+      disabled={isActive}
+      style={[ styles.item, { backgroundColor: isActive ? "#f0f0f0" : "#fff" } ]}
+    >
+      <View style={ styles.Row }>
+        <TouchableOpacity onPress = {() => onSelect(item)}>
+          {item.thumbnail ? (
+            <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
+          ) : (
+            <View style={[styles.thumbnail, styles.placeholder]}>
+              <Text style={styles.thumbnailText}>Abra o PDF para extrair as informações</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+        <View>
+            <Text style={styles.title}>
+              {item.name.replace(/\.pdf$/i, "")}
+            </Text>
+            <Text>Páginas: {item.pages || ""}</Text>
+            <Text>Autor:</Text>
+            <Text>Progresso:</Text>
+            <View style={ styles.iconRow }>
+              <TouchableOpacity onPress={() => onSelect(item)}>
+                <Image
+                  source={require("../assets/images/read-Book-Icon.png")}
+                  style={ styles.icons }
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => toggleFavorite(item.uri)}>
+                <Image
+                  source={favorite[item.uri] ? require("../assets/images/favorited-Book.png") : require("../assets/images/favorite-Book.png")}
+                  style={ styles.icons }
+                />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Image
+                  source={require("../assets/images/statistics.png")}
+                  style={ styles.icons }
+                />
+              </TouchableOpacity>
+            </View>
+        </View>
+      </View>
+    </TouchableOpacity>
+  )
+
   return (
     <>
-      <FlatList
+      <DraggableFlatList
         style={{ alignSelf: "stretch" }}
         data={pdfs}
         keyExtractor={(item, index) => `${item.uri}-${index}`}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-              <View style={ styles.Row }>
-                <TouchableOpacity onPress = {() => onSelect(item)}>
-                  {item.thumbnail ? (
-                    <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
-                  ) : (
-                    <View style={[styles.thumbnail, styles.placeholder]}>
-                      <Text style={styles.thumbnailText}>Abra o PDF para extrair as informações</Text>
-                    </View>
-                  )}
-                </TouchableOpacity>
-                <View>
-                    <Text style={styles.title}>
-                      {item.name.replace(/\.pdf$/i, "")}
-                    </Text>
-                    <Text>Páginas: {item.pages || ""}</Text>
-                    <Text>Autor:</Text>
-                    <Text>Progresso:</Text>
-                    <View style={ styles.iconRow }>
-                      <TouchableOpacity onPress={() => onSelect(item)}>
-                        <Image
-                          source={require("../assets/images/read-Book-Icon.png")}
-                          style={ styles.icons }
-                        />
-                      </TouchableOpacity>
-                      <TouchableOpacity onPress={() => toggleFavorite(item.uri)}>
-                        <Image
-                          source={favorite[item.uri] ? require("../assets/images/favorited-Book.png") : require("../assets/images/favorite-Book.png")}
-                          style={ styles.icons }
-                        />
-                      </TouchableOpacity>
-                      <TouchableOpacity>
-                        <Image
-                          source={require("../assets/images/statistics.png")}
-                          style={ styles.icons }
-                        />
-                      </TouchableOpacity>
-                    </View>
-                </View>
-              </View>
-          </View>
-        )}
+        renderItem={renderItem}
         ListEmptyComponent={
           <View style={styles.item}>
             <Text>Nenhum PDF selecionado ainda.</Text>
@@ -83,7 +90,8 @@ const styles = StyleSheet.create({
   },
   title: { 
     fontSize: 16, 
-    fontWeight: "bold" 
+    fontWeight: "bold",
+    maxWidth: 250
   },
   separator: { 
     height: 1, 
