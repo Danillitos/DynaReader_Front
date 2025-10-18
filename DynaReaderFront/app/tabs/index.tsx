@@ -85,17 +85,16 @@ export default function HomeScreen() {
         </GestureDetector>
       </View>
 
-      {/* Painel inferior com lista de livros */}
       <Animated.View
         style={[
           {
             position: 'absolute',
-            bottom: -height, // começa fora da tela
+            bottom: -height, 
             width: '100%',
             height: height,
             backgroundColor: '#F2F2F0',
-            justifyContent: 'center',
-            alignItems: 'center',
+            overflow: 'hidden',
+            elevation: 10,
           },
           animatedStyle,
         ]}

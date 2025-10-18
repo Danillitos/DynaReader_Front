@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import DraggableFlatList, { RenderItemParams} from "react-native-draggable-flatlist"
 import { PdfRef } from "../services/pdfService";
 
@@ -7,6 +7,7 @@ type Props = {
   pdfs: PdfRef[];
   onSelect: (pdf: PdfRef) => void;
 };
+
 
 export default function BookList({ pdfs, onSelect }: Props) {
   const [ data, setData ] = useState<PdfRef[]>(pdfs)
@@ -81,31 +82,47 @@ export default function BookList({ pdfs, onSelect }: Props) {
 
   return (
     <>
-      <DraggableFlatList
-        activationDistance={10}
-        autoscrollSpeed={100}
-        autoscrollThreshold={50}
-        dragItemOverflow={true}
-        animationConfig={{ damping: 15, mass: 0.2, stiffness: 150 }}
-        style={{ alignSelf: "stretch" }}
-        data={data}
-        keyExtractor={(item, index) => `${item.uri}-${index}`}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        renderItem={renderItem}
-        onDragEnd={({ data }) => setData(data)}
-        ListEmptyComponent={
-          <View style={styles.item}>
-            <Text>Nenhum PDF selecionado ainda.</Text>
-          </View>
-        }
-      />
+      {pdfs.length === 0 ? (
+        <View style={styles.emptyItem}>
+          <Text style={styles.NoPdfText}>Nenhum PDF selecionado ainda.</Text>
+        </View>
+      ) : (
+        <DraggableFlatList
+          activationDistance={10}
+          removeClippedSubviews={false}
+          autoscrollSpeed={300}
+          autoscrollThreshold={200}
+          dragItemOverflow={true}
+          animationConfig={{ damping: 15, mass: 0.2, stiffness: 150 }}
+          style={{ alignSelf: "stretch" }}
+          data={data}
+          keyExtractor={(item, index) => `${item.uri}-${index}`}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          renderItem={renderItem}
+          onDragEnd={({ data }) => setData(data)}
+          contentContainerStyle={{ paddingBottom: 170 }}
+        />
+      )}
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  item: { 
-    padding: 15 
+  item: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.5,
+    elevation: 2,
+  },
+  emptyItem: { 
+    flex: .8,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   title: { 
     fontSize: 16, 
@@ -151,5 +168,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     gap: 10,
+  },
+  NoPdfText: {
+    fontSize: 16,
+    textAlign: 'center',
   }
 });
